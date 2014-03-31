@@ -12,8 +12,6 @@ var PluginError = gutil.PluginError;
 module.exports = function(opt) {
 
   function transform(file, encoding, next) {
-    /*jshint validthis:true */
-    var self = this;
 
     if(file.isNull()) {
       return next(null, file); // pass along
