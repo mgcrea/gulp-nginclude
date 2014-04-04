@@ -12,6 +12,10 @@
     "type": "git",
     "url": "git://github.com/mgcrea/gulp-nginclude.git"
   },
+  "keywords": [
+    "gulp",
+    "angular"
+  ],
   "bugs": {
     "url": "https://github.com/mgcrea/gulp-nginclude/issues"
   },
@@ -31,6 +35,7 @@
     "cheerio": "^0.13.1",
     "glob": "^3.2.9",
     "gulp-util": "~2.2.14",
+    "lodash.assign": "^2.4.1",
     "through2": "^0.4.1"
   },
   "devDependencies": {
