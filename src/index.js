@@ -24,6 +24,14 @@ module.exports = function(options) {
     // This function receives an ng-include src and tries to read it from the filesystem
     function readSource(src) {
       var cwd = path.dirname(file.path);
+      if(options.assetsDirs && options.assetsDirs.length) {
+        var basename = path.basename(cwd);
+        if(options.assetsDirs.indexOf(basename) === -1) {
+          options.assetsDirs.unshift(path.basename(cwd));
+        }
+        src = path.join('{' + options.assetsDirs.join(',') + '}', src);
+        cwd = path.dirname(cwd);
+      }
       var match = glob.sync(src, {cwd: cwd});
       if(!match.length) return next(new PluginError('gulp-nginclude', 'File "' + src + '" not found'));
       return fs.readFileSync(path.join(cwd, match[0])).toString();
