@@ -37,11 +37,11 @@ module.exports = function(options) {
       // Remove old ng-include attributes so Angular doesn't read them
       $ng.removeAttr('src').removeAttr('ng-include');
 
-      var before = "<!-- ngInclude: " + src + " -->\n";
-      // var after = "\n<!--/ngInclude: " + src + " -->";
+      var before = "\n<!-- ngInclude: " + src + " -->\n";
+      var after = "\n<!--/ngInclude: " + src + " -->\n";
       var include = readSource(src.substr(1, src.length - 2));
       if(options.trim) include = include.trim();
-      $ng.replaceWith(before + include);
+      $ng.html(before + include + after);
       return true;
     }
 

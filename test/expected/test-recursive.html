@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Title</title>
+</head>
+<body ontouchstart="" ng-controller="MainCtrl">
+  <div>
+<!-- ngInclude: 'recursive-2.html' -->
+<div class="recursive-includes">
+  <div>
+<!-- ngInclude: 'partial-1.html' -->
+<p>foo</p>
+<!--/ngInclude: 'partial-1.html' -->
+</div>
+  <div>
+<!-- ngInclude: 'partial-2.html' -->
+<p>bar</p>
+<!--/ngInclude: 'partial-2.html' -->
+</div>
+</div>
+<p>baz</p>
+<!--/ngInclude: 'recursive-2.html' -->
+</div>
+</body>
+</html>
