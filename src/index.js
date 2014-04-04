@@ -7,9 +7,11 @@ var cheerio = require('cheerio');
 var glob = require('glob');
 var gutil = require('gulp-util');
 var through = require('through2');
+var extend = require('lodash.assign');
 var PluginError = gutil.PluginError;
 
-module.exports = function(opt) {
+module.exports = function(options) {
+  options = extend({trim: true}, options);
 
   function transform(file, encoding, next) {
 
@@ -30,15 +32,17 @@ module.exports = function(opt) {
     function processTag(i, ng) {
       var $ng = $(ng);
       var src = $ng.attr('src') || $ng.attr('ng-include');
-      if(!src.match(/^'[^']+'$/g)) return;
+      if(!src.match(/^'[^']+'$/g)) return false;
 
       // Remove old ng-include attributes so Angular doesn't read them
       $ng.removeAttr('src').removeAttr('ng-include');
 
-      var before = "\n<!-- ngInclude: " + src + " -->\n";
-      var after = "\n<!--/ngInclude: " + src + " -->\n";
+      var before = "<!-- ngInclude: " + src + " -->\n";
+      // var after = "\n<!--/ngInclude: " + src + " -->";
       var include = readSource(src.substr(1, src.length - 2));
-      $ng.html(before + include + after);
+      if(options.trim) include = include.trim();
+      $ng.replaceWith(before + include);
+      return true;
     }
 
     // Use while to make the task recursive
@@ -46,13 +50,24 @@ module.exports = function(opt) {
       var tags = $('ng-include, [ng-include]');
 
       // If we don't find any more ng-include tags, we're done
-      if (tags.length === 0) {
+      if(tags.length === 0) {
         file.contents = new Buffer($.html());
         return next(null, file);
       }
 
       // For each tag, grab the associated source file and sub it in
-      tags.each(processTag);
+      var results = [];
+      /* jshint validthis:true*/
+      tags.each(function() {
+        results.push(processTag.apply(null, arguments));
+      });
+
+      // If we don't find any more suitable ng-include tags
+      if(results.filter(Boolean).length === 0) {
+        file.contents = new Buffer($.html());
+        return next(null, file);
+      }
+
     }
 
   }
