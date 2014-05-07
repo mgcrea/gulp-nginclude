@@ -29,7 +29,7 @@ module.exports = function(options) {
         if(options.assetsDirs.indexOf(basename) === -1) {
           options.assetsDirs.unshift(path.basename(cwd));
         }
-        src = path.join('{' + options.assetsDirs.join(',') + '}', src);
+        src = path.join(options.assetsDirs.length > 1 ? '{' + options.assetsDirs.join(',') + '}' : options.assetsDirs[0], src);
         cwd = path.dirname(cwd);
       }
       var match = glob.sync(src, {cwd: cwd});
