@@ -1,7 +1,7 @@
 {
   "name": "gulp-nginclude",
   "description": "Gulp task for embedding AngularJS ngInclude elements",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "main": "src/index.js",
   "homepage": "https://github.com/mgcrea/gulp-nginclude",
   "author": {
