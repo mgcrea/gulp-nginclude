@@ -85,6 +85,26 @@ describe('gulp-nginclude', function() {
 
     });
 
+    it('should properly include templates utilizing the element directive', function(done) {
+      var fixture = new File(extend({contents: fs.readFileSync(__dirname + '/fixtures/test-element.html')}, defaults));
+      var expected = fs.readFileSync(__dirname + '/expected/test-element.html');
+
+      var stream = nginclude();
+      stream.on('data', function(newFile) {
+        should.exist(newFile);
+        should.exist(newFile.path);
+        should.exist(newFile.relative);
+        should.exist(newFile.contents);
+        should.equal(newFile.contents.toString(), expected.toString());
+        newFile.path.should.equal(path.join(__dirname, 'fixtures/file.html'));
+        newFile.relative.should.equal('file.html');
+      });
+      stream.once('end', done);
+      stream.write(fixture);
+      stream.end();
+
+    });
+
     // it('should properly handle dynamic ngIncludes', function(done) {
 
     //   var fixture = new File(extend({contents: new Buffer('<div ng-include="foo"></div>\n<div ng-include="\'bar.html\'"></div>\n<div>baz</div>')}, defaults));
