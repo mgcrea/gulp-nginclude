@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Title</title>
+</head>
+<body ontouchstart="" ng-controller="MainCtrl">
+  <ng-include src="foo" class="mydiv"></ng-include>
+  <ng-include class="mydiv">
+<!-- ngInclude: 'partial-1.html' -->
+<p>foo</p>
+<!--/ngInclude: 'partial-1.html' -->
+</ng-include>
+  <ng-include class="mydiv">
+<!-- ngInclude: 'partial-2.html' -->
+<p>bar</p>
+<!--/ngInclude: 'partial-2.html' -->
+</ng-include>
+</body>
+</html>

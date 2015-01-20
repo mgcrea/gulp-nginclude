@@ -55,7 +55,7 @@ module.exports = function(options) {
 
     // Use while to make the task recursive
     while (true) {
-      var tags = $('ng-include, [ng-include]');
+      var tags = $('ng-include[src], [ng-include]');
 
       // If we don't find any more ng-include tags, we're done
       if(tags.length === 0) {
