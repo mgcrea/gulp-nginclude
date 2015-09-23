@@ -63,7 +63,6 @@ describe('gulp-nginclude', function() {
 
     });
 
-
     it('should properly include recursive templates', function(done) {
 
       var fixture = new File(extend({contents: fs.readFileSync(__dirname + '/fixtures/test-recursive.html')}, defaults));
@@ -84,6 +83,29 @@ describe('gulp-nginclude', function() {
       stream.end();
 
     });
+
+
+    it('should properly ignore variables templates', function(done) {
+
+      var fixture = new File(extend({contents: fs.readFileSync(__dirname + '/fixtures/test-variables.html')}, defaults));
+      var expected = fs.readFileSync(__dirname + '/expected/test-variables.html');
+
+      var stream = nginclude();
+      stream.on('data', function(newFile) {
+        should.exist(newFile);
+        should.exist(newFile.path);
+        should.exist(newFile.relative);
+        should.exist(newFile.contents);
+        should.equal(newFile.contents.toString(), expected.toString());
+        newFile.path.should.equal(path.join(__dirname, 'fixtures/file.html'));
+        newFile.relative.should.equal('file.html');
+      });
+      stream.once('end', done);
+      stream.write(fixture);
+      stream.end();
+
+    });
+
 
     // it('should properly handle dynamic ngIncludes', function(done) {
 
