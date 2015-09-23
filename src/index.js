@@ -9,7 +9,6 @@ var gutil = require('gulp-util');
 var through = require('through2');
 var extend = require('lodash.assign');
 var PluginError = gutil.PluginError;
-require('debug-utils');
 
 module.exports = function(options) {
   options = extend({trim: true}, options);
