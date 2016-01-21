@@ -40,7 +40,7 @@ module.exports = function(options) {
     function processTag(i, ng) {
       var $ng = $(ng);
       var src = $ng.attr('src') || $ng.attr('ng-include');
-      if (!src.match(/^'[^']+'$/g)) {
+      if (!src || !src.match(/^'[^']+'$/g)) {
         return false;
       }
 
